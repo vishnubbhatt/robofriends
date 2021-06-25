@@ -4,6 +4,7 @@ import CardList from '../components/CardList'
 import SearchBox from '../components/SearchBox'
 import './App.css'
 import Scroll from '../components/Scroll'
+import ErrorBoundry from '../components/ErrorBoundry'
 
 export default class App extends React.Component {
     constructor(){
@@ -34,7 +35,7 @@ export default class App extends React.Component {
         const filteredRobot = robots.filter( robots =>{
             return (robots.name.toLowerCase().includes(searchField.toLowerCase()));
         })
-        
+
         if(!robots.length){
             return <h1>Loading...</h1>
         }
@@ -44,11 +45,12 @@ export default class App extends React.Component {
                     <h1 className='f1'>RoboFriends</h1>
                     <SearchBox searchChange= {this.onSearchChange}/>
                     <Scroll>
-                        <CardList robots={filteredRobot}/>
+                        <ErrorBoundry>
+                            <CardList robots={filteredRobot}/>
+                        </ErrorBoundry>
                     </Scroll>
                 </div>
             )
         }
-        
     }
 }
